@@ -2,7 +2,6 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-
 //end of declarations of dependencies
 
 //initializing app
@@ -16,7 +15,6 @@ const shipping = require('./routes/apis/shipping');
 const category = require('./routes/apis/category');
 const attribute = require('./routes/apis/attribute');
 const attribute_value = require('./routes/apis/attribute_value');
-const audit = require('./routes/apis/audit');
 const order = require('./routes/apis/order');
 const order_details = require('./routes/apis/order_details');
 const product_category = require('./routes/apis/product_category');
@@ -63,7 +61,6 @@ app.use('/shipping', shipping);
 app.use('/categories', category);
 app.use('/attributes', attribute);
 app.use('/attribute_value', attribute_value);
-app.use('/audit', audit);
 app.use('/orders', order);
 app.use('/order_details', order_details);
 app.use('/product_categories', product_category);
