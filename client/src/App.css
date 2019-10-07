@@ -1,0 +1,33 @@
+.App {
+  text-align: center;
+}
+
+img#brand {
+  height:50px;
+  width:50px;
+}
+
+.btn-black{
+  background:transparent;
+  text-transform: capitalize;
+  font-size: 0.8rem !important;
+  color: black;
+  border: 0.05rem solid rgba(0,0,0,0.4);
+}
+
+.btn-black:hover{
+  background: rgba(0,0,0,1);
+  color: white;
+  border: 0.1 solid rgba(0,0,0,1);
+  cursor: pointer;
+}
+
+.trash-button{
+  color: #f56262;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.trash-button:hover{
+  color: #db0909;
+}
