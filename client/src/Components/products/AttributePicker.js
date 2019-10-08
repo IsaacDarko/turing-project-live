@@ -1,29 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { FormGroup, Input, Label } from 'reactstrap';
 import styled from 'styled-components';
 
-const AttributePicker = ({ attribute, value }) => {
-    const [elemOneFired, setElementOneFired] = useState(false);
-    const [elemTwoFired, setElementTwoFired] = useState(false);
+export default function AttributePicker({ attribute, value }) {
 
     const { attribute_id, name } = attribute;
     //const [ attribute_value_id, {value : valueName } ] = value;
     const { getValues, setValue, values } = value;
     
-    const captureId = (e) =>{    
-           
+    const captureId = (e) =>{       
         let id = e.target.id;
         if(id !== e.currentTarget.id) {
             e.stopImmediatePropagation();
         }
             getValues(id);
     }
-/*
-    const disableCaptureId = (e) =>{
+
+    /*const lockIn = (e) =>{
         let id = e.target.id;
         captureId.off('mouseEnter', id);
-    }
-*/
+    }*/
+
     
     return (
         <AttributorWrapper>
@@ -36,7 +33,9 @@ const AttributePicker = ({ attribute, value }) => {
                             captureId(e);
                             }
                     }
-                    >
+                    onChange={
+                        (e)=> setValue(e)
+                    }>
 
                         {
                             values.map(value =>{
@@ -51,7 +50,6 @@ const AttributePicker = ({ attribute, value }) => {
         </AttributorWrapper>
     )
 }
-export default AttributePicker;
 
 const AttributorWrapper = styled.div`
     .attribute-input{
