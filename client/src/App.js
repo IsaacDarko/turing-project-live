@@ -1,5 +1,6 @@
 import React, { Component }  from 'react';
 import {Switch, Route} from 'react-router-dom';
+import {Elements, StripeProvider} from 'react-stripe-elements';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Privatize from './Components/Privatize';
@@ -10,7 +11,8 @@ import Details from './Components/products/Details';
 import Modal from './Components/products/modal';
 import Order from './Components/order';
 import Default from './Components/Default';
-import Login from './Components/authsystem/Login';
+import Authenticate from './Components/authsystem';
+import Register from './Components/authsystem/Register';
 import Catalogue from './Components/pages/Catalogue';
 import ShippingRegions from './Components/pages/ShippingRegions';
 import PrivacyPolicy from './Components/pages/PrivacyPolicy';
@@ -53,6 +55,7 @@ class App extends Component {
                 <Switch>
                 
                   <Route exact path="/" component={Productlist} />
+                  <Route exact path="/productlist" component={Productlist} />
                   <Route path="/details" component={Details} />
                   <Route path="/products/:page" component={Productlist} />
                   <Route path="/cart" component={Cart} />
@@ -60,15 +63,16 @@ class App extends Component {
                   <Route path="/shipping-regions" component={ShippingRegions} />
                   <Route path="/special-offers" component={SpecialOffers} />
                   <Route path="/privacy-policy" component={PrivacyPolicy} />
-                  <Route path="/login" component={Login} />
+                  <Route path="/login" component={Authenticate} />
+                  <Route path="/register" component={Register} />
                   <Route path="/order-summary" component={Privatize(Order)} />
                   <Route path="/checkout" component={Checkout} />
                   <Route component={Default} />
 
                 </Switch>
-                
+                <StripeProvider apiKey="pk_test_r9akatg88nMIYHNCALXBd9yA">
                     <CheckoutModal />
-                 
+                </StripeProvider> 
                 
                 <Modal />
                 

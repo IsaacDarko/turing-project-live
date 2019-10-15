@@ -33,12 +33,12 @@ class CheckoutModal extends Component {
                         const { checkoutOpen } = value; 
 
                         if( !checkoutOpen ){
-                          return null;
+                           return null;
                         }
                         else{
                             return <CheckoutForm value={value} />                   
                                         
-                        }
+                        } 
                           
                     }}
               </ProductConsumer>

@@ -1,38 +1,84 @@
 import React, {Component} from 'react';
 import {CardElement, injectStripe} from 'react-stripe-elements';
+import StripeCheckout from 'react-stripe-checkout';
 import { Button } from 'reactstrap';
 import styled from 'styled-components';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 class CheckoutForm extends Component {
   constructor(props) {
     super(props);
-    this.submit = this.submit.bind(this);
+
+    this.state={
+      products:[]
+    }
+
   }
 
-  async submit(ev) {
-    let {token} = await this.props.stripe.createToken({name: "Name"});
-    let response = await fetch("/stripe/charge", {
-      method: "POST",
-      headers: {"Content-Type": "text/plain"},
-      body: token.id
-    });
 
-  if (response.ok) console.log("Purchase Complete!")
+
+  productExtractor = () => {
+    let products = [];
+    let temps = this.props.value.orders;
+    temps.forEach( item =>{
+     products = item.product_name;
+     console.log(products);
+      this.setState(()=>{
+        return { products }
+      })
+    })
   }
 
+
+  componentDidMount(){
+    this.productExtractor();
+  }
+ 
   render() {
     const { closeCheckoutModal } = this.props.value;
+    const { orderSummaryTotal } = this.props.value;
+    const price = parseFloat(orderSummaryTotal).toFixed(2);
+
+    toast.configure();
+
+    async function handleToken(token, details){
+      console.log({token});
+      const product_names = this.state.products;
+      const amount = price;
+      const response = await axios.post('/stripe/charge', {
+        token,
+        product_names,
+        details,
+        amount: parseFloat(amount).toFixed(2)
+      });
+      const status = response.data;
+      if (status === 'success'){
+        toast('Order was placed successfully, check your email for more details',
+        { type:'success' })
+      }else{
+        toast('An error occured, please feel free to contact us',
+        { type:'error' })
+      }
+    }
+
     return (
+      
       <ModalWrapper>
         <div id="checkout" className="col-6 mx-auto col-md-4 col-lg-3 text-center text-capitalize pt-5"> 
             <Button id="clsbtn"><i className="fas fa-times" onClick={()=>closeCheckoutModal()}/></Button>
             <h6>Would you like to complete the purchase?</h6>
 
               <div id="card_element">
-                <CardElement />
+                <StripeCheckout stripeKey="pk_test_r9akatg88nMIYHNCALXBd9yA" 
+                token={handleToken.bind(this)} 
+                billingAddress
+                shippingAddres
+                amount={ price * 100}
+                />
               </div>
-              
-            <button id="paybtn" onClick={this.submit}>Purchase</button>
+            
+            {/*<button id="paybtn" onClick={this.submit}>Purchase</button>*/}
         </div>
       </ModalWrapper>
       

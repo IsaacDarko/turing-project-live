@@ -92,7 +92,7 @@ export default class Navigation extends Component {
 
         return (
             <Navbar color="dark" className="navbar navbar-expand-sm navbar-dark">
-              <NavbarBrand href="/">
+              <NavbarBrand href="/productlist">
                 <img id="brand" src={logo} alt="Turing Store" />
               </NavbarBrand>
 

@@ -8,6 +8,7 @@ import OrderFooter from './OrderFooter';
 import { Table, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from 'axios';
 
 class Order extends Component {
     constructor(){
@@ -19,12 +20,12 @@ class Order extends Component {
 
     } 
 
-    
     render() {
          return (
            <ProductConsumer>
                 { value =>{
                     const { orders, culminate } = value;
+
                     if(orders.length > 0){
                         return(  
                             <OrderWrapper>

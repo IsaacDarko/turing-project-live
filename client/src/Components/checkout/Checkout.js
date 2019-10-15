@@ -118,7 +118,7 @@ class Checkout extends Component {
                                             <div>
                                                 <FormGroup>                                                
                                                     <Label>Name</Label>
-                                                    <Input type="text" id="full-name" name="full-name" className="finput" placeholder="Your full name" />                                            
+                                                    <Input type="text" id="name" name="name" className="finput" placeholder="Your full name" />                                            
                                                 </FormGroup>
                                             </div>
 
@@ -134,7 +134,7 @@ class Checkout extends Component {
                                             <div>
                                                 <FormGroup>
                                                     <Label>Address</Label>
-                                                    <Input type="text" id="email" name="email" className="finput" placeholder="Your email" />
+                                                    <Input type="text" id="address_1" name="address_1" className="finput" placeholder="Your email" />
                                                 </FormGroup>
                                             </div>                                            
 
@@ -142,7 +142,7 @@ class Checkout extends Component {
                                             <div>
                                                 <FormGroup>
                                                     <Label>Alternative Address</Label>
-                                                    <Input type="text" id="email" name="email" className="finput" placeholder="Your email" />
+                                                    <Input type="text" id="address_2" name="address_2" className="finput" placeholder="Your email" />
                                                 </FormGroup>
                                             </div>                                            
 
@@ -150,7 +150,7 @@ class Checkout extends Component {
                                             <div>
                                                 <FormGroup>
                                                     <Label>City/Town</Label>
-                                                    <Input type="text" id="email" name="email" className="finput" placeholder="Your email" />
+                                                    <Input type="text" id="city" name="city" className="finput" placeholder="Your email" />
                                                 </FormGroup>
                                             </div>
                                             
@@ -158,7 +158,7 @@ class Checkout extends Component {
                                             <div>
                                                 <FormGroup>
                                                     <Label>Zip</Label>
-                                                    <Input type="text" id="email" name="email" className="finput" placeholder="Your email" />
+                                                    <Input type="text" id="postal_code" name="postal_code" className="finput" placeholder="Your email" />
                                                 </FormGroup>
                                             </div>
                                             
@@ -167,7 +167,7 @@ class Checkout extends Component {
                                             <div>
                                                 <FormGroup>
                                                     <Label>Country</Label>
-                                                    <Input type="text" id="email" name="email" className="finput" placeholder="Your email" />
+                                                    <Input type="text" id="country" name="country" className="finput" placeholder="Your email" />
                                                 </FormGroup>
                                             </div>
                                             
@@ -176,12 +176,12 @@ class Checkout extends Component {
                                             <div className="finput_box">
                                                 <Label>Phone</Label>
                                                 <FormGroup>                                                
-                                                    <Input type="text" id="email" name="email" className="finput" placeholder="Your email" />
+                                                    <Input type="text" id="mob_phone" name="mob_phone" className="finput" placeholder="Your email" />
                                                 </FormGroup>
                                             </div>
                                             
                                             <Button onClick={ () => openCheckoutModal() }>
-                                                Save And Pay
+                                                Update My Details And Pay
                                             </Button>
                                         </Form>
                                     </div>

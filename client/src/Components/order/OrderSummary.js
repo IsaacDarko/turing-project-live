@@ -4,17 +4,17 @@ import {
 } from 'reactstrap';
 import OrderItem from './OrderItem'; 
 
-export default function OrderSummary({value}) {
-    const { orders } = value;
+export default function OrderSummary({ order, value}) {
+    const { orders, currentOrder } = value;
 
-    return (
+    return ( 
          
         <React.Fragment>
                     <tbody>
                                    
                             { 
-                                orders.map(item => {
-                                    return <OrderItem key={item.product_id} item={item} value={value}/>
+                                currentOrder.map(item => {
+                                    return <OrderItem key={item.item_id} item={item} value={value}/>
                                 }) 
                             }      
                         

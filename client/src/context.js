@@ -23,6 +23,7 @@ class ProductProvider extends Component {
         detailProduct: [],
         cart: [],
         orders:[],
+        currentOrder:[],
         modalOpen:false,
         modalProduct: [],      
         cartSubTotal: 0,
@@ -32,7 +33,7 @@ class ProductProvider extends Component {
         taxes:[],
         regions:[],
         checkoutOpen:false,
-        OrderSummaryTotal:0
+        orderSummaryTotal:0
     }; 
 
     componentDidMount(){
@@ -599,40 +600,62 @@ class ProductProvider extends Component {
              tax_id
          },options)
          .then ((res)=>{
-             localStorage.setItem('orderid', res);
+             localStorage.setItem('orderid', res.data);
          })
- 
+         const id = localStorage.getItem('orderid')
+         const order_id = parseInt(id) ;   
+         const curr_id = order_id + 1
+         console.log(order_id);
          axios.get('/orders/inCustomer', options)
-         .then((order)=>{
-            let tempOrderList = order.data;
+         .then((order)=>{                                 
+            const tempOrderList = order.data;
+            let currentOrder = [...tempOrderList]; 
+            console.log(currentOrder);
+            console.log(tempOrderList);
+            currentOrder = currentOrder.filter( item => item.order_id === curr_id);
+            console.log(currentOrder);
             this.setState(()=>{
-                 return { orders: tempOrderList }
+                 return { orders: tempOrderList, currentOrder }
              })
+            
          })
      }
 
 
 
 
-     culminate = () =>{
-        const taxes = this.state.taxes;
-        const taxPercentage = taxes.reduce(
-            (arr, elem) => arr.concat(elem.tax_percentage), 0
+     culminate = (taxes) =>{
+        const tax = taxes;
+        console.log(tax);
+        const tempTaxPercentage = tax.reduce(
+            (arr, elem) => arr.concat(elem.tax_percentage), []
             );
+        console.log(tempTaxPercentage);
+        const taxPercentage = parseFloat(tempTaxPercentage);
+        const order_id = localStorage.getItem('orderid');
         console.log(taxPercentage);
-
-        const tempTotal = this.state.cartTotal;
-        const tax = tempTotal/taxPercentage ;
-        const priceList = tempTotal.reduce(
-            (arr, elem)=> arr.concat(elem.total_amount),[]
-            )
-        const rawTotal = priceList.map(function(i) { 
-            return /^\d+(\.\d+)?$/.test(i) ? parseFloat(i) : 0;
-        }) 
-        const total = rawTotal + tax;
-        this.setState(()=>{
-            return { OrderSummaryTotal: total }
+        const options={
+            params:{
+                order_id
+            }
+        }
+        axios.get('/orders/order-total', options)
+        .then((total_amount)=>{
+            const tempInitTotal = total_amount.data;
+            console.log(tempInitTotal);
+            const tempSubTotal = tempInitTotal.reduce(
+                (arr, elem) => arr.concat(elem.total_amount),[]
+                )
+            const tempTotal = parseFloat(tempSubTotal);
+            console.log(tempTotal)
+            const tax = tempTotal/taxPercentage ;
+            let tot = tempTotal + tax;
+            const total = parseFloat(tot).toFixed(2);
+            this.setState(()=>{
+                return { orderSummaryTotal: total }
+            })
         })
+        
     }
 
 
@@ -691,8 +714,11 @@ class ProductProvider extends Component {
                 this.setState(()=>{
                     return { taxes }
                 })
+                this.culminate(taxes);
             })
         }
+
+        
     }
 
 

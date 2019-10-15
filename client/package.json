@@ -7,7 +7,7 @@
     "email-prop-type": "^3.0.0",
     "jquery": "^3.4.1",
     "jwt-decode": "^2.2.0",
-    "react": "^16.10.2",
+    "react-addons-css-transition-group": "^15.6.2",
     "react-chartjs-2": "^2.8.0",
     "react-device-detect": "^1.9.10",
     "react-dom": "^16.10.2",
@@ -18,10 +18,14 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.2.0",
     "react-star-ratings": "^2.3.0",
+    "react-stripe-checkout": "^2.6.3",
     "react-stripe-elements": "^5.0.1",
+    "react-toastify": "^5.4.0",
+    "react-transition-group": "^4.3.0",
     "reactstrap": "^8.0.1",
     "reselect": "^4.0.0",
-    "styled-components": "^4.4.0"
+    "styled-components": "^4.4.0",
+    "toastify": "^2.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

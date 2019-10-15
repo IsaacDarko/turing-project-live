@@ -110,7 +110,7 @@ router.post('/', auth, (req, res) => {
                         })
                         newOrderDeets.save()
                         .then((newOrderDetails)=>{
-                           
+                           // res.json(newOrderDetails);
                         })
                     })
                     res.status(200).json(newOrder.order_id);
@@ -130,7 +130,7 @@ router.post('/', auth, (req, res) => {
 //@Route        GET /orders/{order_id}
 //@description  Retrieves an order using the order id
 //@access       Access is private
-router.get('/', auth, (req, res) => {
+router.get('/id', auth, (req, res) => {
     const order_id = req.query.order_id;
     if ( !order_id ){
         res.status(400).json({
@@ -173,7 +173,7 @@ router.get('/inCustomer', auth, (req, res) => {
             (arr, elem) => arr.concat(elem.order_id), []
             )
             Order.findAll({
-                attributes:['order_id', 'order_detail.product_name', 'order_detail.quantity', 'order_detail.product_id', 'order_detail.unit_cost', 'total_amount', 'created_on', 'customer_id', 'auth_code', 'reference', 'shipping_id', 'tax_id'],
+                attributes:['order_id', 'order_detail.product_name', 'order_detail.quantity', 'order_detail.item_id', 'order_detail.product_id', 'order_detail.unit_cost', 'total_amount', 'created_on', 'customer_id', 'auth_code', 'reference', 'shipping_id', 'tax_id'],
                 where:{ order_id },
                 include:[{
                     model:Order_detail,
@@ -194,44 +194,24 @@ router.get('/inCustomer', auth, (req, res) => {
 
 
 
-/*
-//@Route        GET /orders/inCustomerCart
-//@description  Retrieves all orders for the current session using the customer's id
-//@access       Access is private
-router.get('/inCustomerCart', auth, (req, res) => {
-    const customer_id = req.user.id;
-    const cart_id = req.query.cart_id;
-    const Op = Sequelize.Op;
-    Order_detail.belongsTo(Order, { foreignKey: "order_id" });
-    Order.hasOne(Order_detail,{ foreignKey: "order_id" });
-    Order.belongsTo(Shopping_cart, { foreignKey: "" });
+
+//@Route        GET /orders/order-total
+//@description  Retrieves the gross amount on the order
+//@access       Access is public
+router.get('/order-total', (req, res) => {
+    const order_id = req.query.order_id;
 
     Order.findAll({
-        attributes:['order_id'],
-        where: { [Op.and]: [ {customer_id}, {cart_id} ]  }
+        attributes:['total_amount'],
+        where: { order_id }
     })
-    .then((ids)=>{
-        const order_id = ids.reduce(
-            (arr, elem) => arr.concat(elem.order_id), []
-            )
-            Order.findAll({
-                attributes:['order_id', 'order_detail.product_name', 'order_detail.quantity', 'order_detail.product_id', 'order_detail.unit_cost', 'total_amount', 'created_on', 'customer_id', 'auth_code', 'reference', 'shipping_id', 'tax_id'],
-                where:{ order_id },
-                include:[{
-                    model:Order_detail,
-                    attributes:[],
-                    where:{ order_id }
-                }],
-                raw:true
-            })
-            .then(order => {
-                res.status(200).json(order);
-            })
+    .then((total)=>{
+        res.status(200).json(total)
     })    
     .catch(err => console.log(err))
 
 });
-*/
+
 
 
 

@@ -200,7 +200,7 @@ router.put('/update/', ( req, res ) => {
 router.get('/totalAmount/', (req, res) => {
     const cart_id = req.query.cart_id;
     Shopping_cart.findAll({
-        attributes:['product_id'],
+        attributes:['product_id'], 
         where:{ cart_id }
     })
     .then(prod_ids => {
